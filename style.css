@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  color: white;
+}
+body {
+  overflow: hidden;
+  opacity: 0;
+  transition: all 2s;
+}
+
+.visible {
+  opacity: 1;
+}
+#particles-js {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100vh;
+}
+
+.particles {
+  background: black;
+}
+
+.dark {
+  position: fixed;
+  top: 2%;
+  right: 1%;
+  color: black;
+  cursor: pointer;
+  padding: 3px 7px;
+}
+
+.box {
+  height: 80vh;
+  width: 80vw;
+
+  background: rgba(67, 56, 179, 0.8);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(1px);
+  border-radius: 50px;
+  position: relative;
+  transform: translate(12%, 12%);
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 10vh;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px 3em;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+.sign-in-sign-up {
+  background: rgba(255, 255, 255, 0.33);
+  padding: 10px;
+  border: solid 0.7px #3498db;
+  position: relative;
+  word-wrap: break-word;
+  font-weight: bold;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: 0.8s;
+  z-index: 100;
+}
+
+.sign-in-sign-up:hover {
+  transform: scale(1.05);
+}
+nav a:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0%;
+  z-index: -1;
+  background: #3498db;
+
+  transition: 0.8s;
+}
+
+nav a:hover:before {
+  height: 100%;
+}
+
+main {
+  height: 70vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3em;
+  position: relative;
+}
+
+main > div {
+  width: 50%;
+}
+
+.left-section {
+  /* background: lightblue; */
+  transform: translate(10%, -60%);
+}
+
+.heading {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 3rem;
+  font-weight: bolder;
+}
+
+.sub-heading {
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  position: absolute;
+  margin-top: 2vh;
+}
+
+.right-section {
+  /* background: lightblue; */
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+.right-section img {
+  width: 32vw;
+  transform: translateY(-3%);
+}
+
+@media (max-width: 550px) {
+  html {
+    font-size: 14px;
+  }
+  main {
+    padding-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 12px;
+  }
+  .right-section img {
+    width: 35vw;
+  }
+}
+
+@media (max-width: 350px) {
+  html {
+    font-size: 10px;
+  }
+}

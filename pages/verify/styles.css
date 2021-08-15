@@ -1,0 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: rgba(67, 56, 179, 0.8);
+  overflow: hidden;
+}

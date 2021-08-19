@@ -2,7 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const token = urlParams.get("token");
 const apiUrl = "https://infinite-coast-54217.herokuapp.com";
 
-console.log(token);
+// console.log(token);
 
 const reset = document.querySelector(".reset-button");
 
@@ -11,7 +11,10 @@ reset.addEventListener("click", () => {
     const retyped = document.querySelector(".retyped-password").value;
 
     if(newPassword != retyped) {
-        alert("Passwords don't match");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Passwords don\'t match!',
+        })
         return;
     }
 
@@ -25,6 +28,19 @@ reset.addEventListener("click", () => {
     })
     .then((res) => res.json())
     .then((data) =>{
-        console.log(data);
+        if(data.message){
+            Swal.fire({
+                icon: 'success',
+                title: `${data.message}`,
+              }).then(() => {
+                location.href = "/pages/signup/signup.html";
+              })
+        }
+        else if(data.error){
+            Swal.fire({
+                icon: 'error',
+                text: `${data.error}`,
+              })
+        }
     })
 })

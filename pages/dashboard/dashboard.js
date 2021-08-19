@@ -45,8 +45,17 @@ const createNotes = (array) => {
         card.innerHTML = cardHTML;
         const deleteNote = card.querySelector(".delete-note");
         deleteNote.addEventListener("click", () =>{
-            if (confirm('Are you sure you want to delete this note?')) {
-                fetch(`${apiUrl}/notes/delete/${noteId}`, 
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`${apiUrl}/notes/delete/${noteId}`, 
                 {
                     method: 'DELETE',
                     headers : {
@@ -58,11 +67,22 @@ const createNotes = (array) => {
                 .then((data) => {
                     console.log(data);
                     if(data.message) {
-                        location.reload();
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        ).then(() => {
+                            location.reload();
+                        })
+                        
                     }
                 })
+                  
+                }
+              })
+                
             
-            } 
+            
         })
         
         cardContainer.appendChild(card);
@@ -77,9 +97,27 @@ const logout = document.querySelector(".log-out");
 
 logout.addEventListener("click", (e) => {
     e.preventDefault();
-
-    localStorage.removeItem("token");
-    location.href = "/"
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You will be logged out of your account.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log out!'
+      }).then((result) => {
+        if (result.isConfirmed){
+            localStorage.removeItem("token");
+            Swal.fire({
+                icon: 'success',
+                title: 'User logged out!',
+            }).then(() => {
+                location.href = "/";
+            })
+        }
+    })
+    
+    
 })
 
 const welcome = document.querySelector(".welcome");
@@ -98,20 +136,34 @@ window.addEventListener("load", () => {
         })
         .then((res) => res.json())
         .then((data) => {
-            const name = data.name;
-            welcome.innerHTML = `Welcome ${name}`;
-            console.log(data.data);
-            data.data.forEach((item) => {
-                console.log(item.heading, item.content);
-            })
-            data.data.sort(function (a, b) {
-                return a.noteId - b.noteId;
-              });
-            createNotes(data.data);
+            if(data.message){
+                const name = data.name;
+                const nameArr = name.split(" ");
+                welcome.innerHTML = `Welcome ${nameArr[0]}`;
+                console.log(data.data);
+                data.data.forEach((item) => {
+                    console.log(item.heading, item.content);
+                })
+                data.data.sort(function (a, b) {
+                    return a.noteId - b.noteId;
+                });
+                createNotes(data.data);
+            }
+            else if (data.error){
+                Swal.fire({
+                    icon: 'error',
+                    title: `${data.error}`,
+                })
+            }
             
         })
         .catch((error) => {
             console.log(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Warning!',
+            text: 'Internal server error occured. Please try again!',
+        })
         })
     }
 })

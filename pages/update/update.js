@@ -27,12 +27,33 @@ window.addEventListener("load", () => {
     .then((res) => res.json())
     .then((data) =>{
         console.log(data);
-        console.log(data.heading);
         
-       header.value = data.heading;
-       contentbox.value = data.content;
+
+        if(data.error){
+            Swal.fire({
+                icon: 'error',
+                title: `${data.error}`,
+            }).then(() => {
+                location.href = "/pages/dashboard/dashboard.html";
+            })
+        }
+        
+        else{
+            header.value = data.heading;
+            contentbox.value = data.content;
+        }
+       
         
     })
+    .catch((error) =>{
+        console.log(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Warning!',
+            text: 'Internal server error occured. Please try again!',
+        })
+    })
+
 })
 
 update.addEventListener("click", (e) => {
@@ -55,13 +76,39 @@ update.addEventListener("click", (e) => {
         .then((res) => res.json())
         .then((data) =>{
             console.log(data);
-                location.href = "/pages/dashboard/dashboard.html";
+            if(data.message){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Note updated!',
+                }).then(() => {
+                    location.href = "/pages/dashboard/dashboard.html";
+                })
+            }
+            else if(data.error){
+                Swal.fire({
+                    icon: 'error',
+                    title: `${data.error}`,
+                })
+            }
+
+            else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Warning!',
+                    text: 'Error occured!',
+                  })
+            }
+                
             
             
         })
         .catch((error) =>{
-            alert("Note couldn't be updated!");
             console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Warning!',
+                text: 'Internal server error occured. Please try again!',
+            })
         })
 
     
@@ -71,7 +118,25 @@ const logout = document.querySelector(".log-out");
 
 logout.addEventListener("click", (e) => {
     e.preventDefault();
-
-    localStorage.removeItem("token");
-    location.href = "/"
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You will be logged out of your account.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log out!'
+      }).then((result) => {
+        if (result.isConfirmed){
+            localStorage.removeItem("token");
+            Swal.fire({
+                icon: 'success',
+                title: 'User logged out!',
+            }).then(() => {
+                location.href = "/";
+            })
+        }
+    })
+    
+    
 })

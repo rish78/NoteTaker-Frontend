@@ -7,12 +7,7 @@ if(!token) {
     location.href = "/pages/signup/signup.html";
 }
 
-logout.addEventListener("click", (e) => {
-    e.preventDefault();
 
-    localStorage.removeItem("token");
-    location.href = "/"
-})
 
 const create = document.querySelector(".create-note-button");
 
@@ -35,14 +30,65 @@ create.addEventListener("click", (e) => {
         })
         .then((res) => res.json())
         .then((data) =>{
-                location.href = "/pages/dashboard/dashboard.html";
-            
+            if(data.message){
+                Swal.fire({
+                    icon: 'success',
+                    title: `${data.message}`,
+                }).then(() =>{
+                    location.href = "/pages/dashboard/dashboard.html";
+                })
+            }
+                
+            else if( data.error){
+                Swal.fire({
+                    icon: 'error',
+                    title: `${data.error}`,
+                })
+            }
+    
+            else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Warning!',
+                    text: 'Error occured! Note couldn\'t be created',
+                  })
+            }
             
         })
         .catch((error) =>{
-            alert("Note couldn't be created!");
+            
             console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Warning!',
+                text: 'Internal server error occured. Please try again!',
+            })
         })
 
+    
+})
+
+logout.addEventListener("click", (e) => {
+    e.preventDefault();
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You will be logged out of your account.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log out!'
+      }).then((result) => {
+        if (result.isConfirmed){
+            localStorage.removeItem("token");
+            Swal.fire({
+                icon: 'success',
+                title: 'User logged out!',
+            }).then(() => {
+                location.href = "/";
+            })
+        }
+    })
+    
     
 })

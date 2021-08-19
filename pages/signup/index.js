@@ -23,12 +23,16 @@ googleLogin.addEventListener("click", () => {
     .then((data) =>{
         console.log(data);
     })
+    .catch((err) =>{
+        console.log(err);
+        Swal.fire({
+            icon: 'error',
+            title: 'Warning!',
+            text: 'Error Signing up, Try again.',
+          })
+    })
 
-    Swal.fire({
-        icon: 'error',
-        title: 'Warning!',
-        text: 'Error Signing up, Try again.',
-      })
+    
     
 })
 

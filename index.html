@@ -4,15 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200&display=swap"
       rel="stylesheet"
     />
+    
     <link rel="stylesheet" href="style.css" />
     <title>Note Taker</title>
   </head>
   <body>
     <!-- <button class="dark">Dark</button> -->
+    <div class="dark-mode">
+      <input type="checkbox" class="checkbox" id="checkbox">
+      <label for="checkbox" class="label">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+      <div class='ball'></div>
+    </label>
+  </div>
     <div class="box">
       <nav>
         <div class="sign-in-sign-up"><a href="/pages/signup/signup.html">Sign In/ Sign Up </a></div>

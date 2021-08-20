@@ -11,3 +11,12 @@ const particles = document.querySelector("#particles-js");
 // dark.addEventListener("click", ()=>{
 //     particles.classList.toggle("particles");
 // })
+
+const checkbox = document.getElementById('checkbox');
+
+checkbox.addEventListener('change', ()=>{
+    console.log("change");
+
+    document.body.classList.toggle("dark");
+    console.log(body.classList);
+})
